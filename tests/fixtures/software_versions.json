@@ -1,0 +1,12 @@
+{
+    "bikes": [
+        {
+            "vin": "7TM3GDYD6SB000000",
+            "bikeId": "100000001",
+            "currentVsbVersion": "3.2.1",
+            "maxAvailableVsbVersion": "3.3.0",
+            "vsbMatchStatus": "MISMATCH",
+            "featureIds": []
+        }
+    ]
+}

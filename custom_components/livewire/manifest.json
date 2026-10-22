@@ -1,0 +1,20 @@
+{
+    "domain": "livewire",
+    "name": "LiveWire",
+    "codeowners": [
+        "@blind-oracle"
+    ],
+    "config_flow": true,
+    "documentation": "https://github.com/hass-livewire/hass-livewire",
+    "integration_type": "hub",
+    "iot_class": "cloud_polling",
+    "issue_tracker": "https://github.com/hass-livewire/hass-livewire/issues",
+    "loggers": [
+        "py_livewire",
+        "custom_components.livewire"
+    ],
+    "requirements": [
+        "py-livewire==0.1.0"
+    ],
+    "version": "0.1.0"
+}

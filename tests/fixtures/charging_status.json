@@ -1,0 +1,14 @@
+{
+    "bikeChargingData": {
+        "batteryPercentage": 50,
+        "chargingStatus": false,
+        "durationElapsed": "2",
+        "durationUnit": "days",
+        "maxLimit": 90,
+        "odometer": 1000.5,
+        "pluggedIn": false,
+        "range": 44,
+        "timeToMaxLimit": "0.0"
+    },
+    "trackingStatus": "SAFE"
+}

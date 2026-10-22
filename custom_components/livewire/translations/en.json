@@ -1,0 +1,286 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "LiveWire account",
+                "description": "Log in with the account of the LiveWire app.",
+                "data": {
+                    "username": "Email",
+                    "password": "Password"
+                }
+            },
+            "device": {
+                "title": "Device UUID",
+                "description": "LiveWire only shares the battery and charging status of a motorcycle with devices paired with it. Home Assistant acts as such a device, identified by a device UUID.\n\nWithout pairing, the position, tire pressure, software versions and charging schedules are still available. Pairing can be done later by reconfiguring the integration.",
+                "menu_options": {
+                    "device_uuid": "Use a device UUID that is already paired",
+                    "pair": "Pair with my motorcycle",
+                    "skip": "Continue without pairing (no battery and charging data)"
+                }
+            },
+            "device_uuid": {
+                "title": "Paired device UUID",
+                "description": "Enter a device UUID that is paired with your motorcycle, for example the one of the LiveWire app on your phone. The README of the integration explains how to find it.",
+                "data": {
+                    "device_uuid": "Device UUID"
+                }
+            },
+            "pick_bike": {
+                "title": "Motorcycle",
+                "description": "Choose the motorcycle to pair with.",
+                "data": {
+                    "bike": "Motorcycle"
+                }
+            },
+            "pair_start": {
+                "title": "Pair with {bike}",
+                "description": "Go to your motorcycle:\n\n1. Switch the ignition on and wait for the display.\n2. Make sure it is not in propulsion mode and not charging.\n3. It needs cellular reception.\n\nThen submit, and the motorcycle shows a pairing code on its display."
+            },
+            "pair_code": {
+                "title": "Pairing code",
+                "description": "Enter the code shown on the display of {bike}.",
+                "data": {
+                    "code": "Code"
+                }
+            },
+            "reauth_confirm": {
+                "title": "LiveWire account",
+                "description": "The credentials of the LiveWire account are no longer valid.",
+                "data": {
+                    "username": "Email",
+                    "password": "Password"
+                }
+            }
+        },
+        "progress": {
+            "wait_for_pairing": "Waiting for {bike} to confirm the pairing, this can take up to a minute."
+        },
+        "error": {
+            "invalid_auth": "Invalid email or password",
+            "cannot_connect": "Failed to connect to LiveWire",
+            "unknown": "Unexpected error",
+            "invalid_uuid": "This is not a valid UUID",
+            "not_paired": "This device UUID is not paired with any of your motorcycles",
+            "bike_not_ready": "The motorcycle is not ready for pairing: switch the ignition on, and make sure it is not in propulsion mode and not charging",
+            "no_cellular": "The motorcycle has no cellular connection",
+            "pairing_failed": "Pairing failed, try again",
+            "wrong_code": "Wrong code",
+            "attempts_exceeded": "Too many wrong codes, request a new one",
+            "not_confirmed": "The motorcycle did not confirm the pairing, try again"
+        },
+        "abort": {
+            "already_configured": "This LiveWire account is already configured",
+            "no_bikes": "There are no motorcycles in this LiveWire account",
+            "wrong_account": "These are the credentials of a different LiveWire account",
+            "reauth_successful": "Re-authentication was successful",
+            "reconfigure_successful": "Reconfiguration was successful",
+            "invalid_auth": "Invalid email or password, re-authenticate first",
+            "cannot_connect": "Failed to connect to LiveWire",
+            "unknown": "Unexpected error"
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "data": {
+                    "scan_interval": "Polling interval (minutes)",
+                    "charging_scan_interval": "Polling interval while charging (minutes)",
+                    "add_command_entities": "Add command entities"
+                },
+                "data_description": {
+                    "add_command_entities": "Entities to set the charge limit, start charging and switch the enhanced tracking"
+                }
+            }
+        }
+    },
+    "entity": {
+        "sensor": {
+            "battery_level": {
+                "name": "Battery"
+            },
+            "range": {
+                "name": "Range"
+            },
+            "odometer": {
+                "name": "Odometer"
+            },
+            "charge_limit": {
+                "name": "Charge limit"
+            },
+            "time_to_charge_limit": {
+                "name": "Time to charge limit"
+            },
+            "tracking_status": {
+                "name": "Tracking status",
+                "state": {
+                    "safe": "Safe",
+                    "stolen": "Stolen",
+                    "pending": "Pending"
+                }
+            },
+            "last_reported": {
+                "name": "Last reported"
+            },
+            "tire_pressure_front": {
+                "name": "Front tire pressure"
+            },
+            "tire_pressure_rear": {
+                "name": "Rear tire pressure"
+            },
+            "charging_schedules": {
+                "name": "Charging schedules"
+            }
+        },
+        "binary_sensor": {
+            "charging": {
+                "name": "Charging"
+            },
+            "plugged_in": {
+                "name": "Plugged in"
+            },
+            "tire_pressure_front_low": {
+                "name": "Front tire pressure low"
+            },
+            "tire_pressure_rear_low": {
+                "name": "Rear tire pressure low"
+            },
+            "paired": {
+                "name": "Paired"
+            }
+        },
+        "device_tracker": {
+            "location": {
+                "name": "Location"
+            }
+        },
+        "update": {
+            "software": {
+                "name": "Vehicle software"
+            }
+        },
+        "number": {
+            "charge_limit_setting": {
+                "name": "Charge limit"
+            }
+        },
+        "button": {
+            "start_charging": {
+                "name": "Start charging"
+            }
+        },
+        "switch": {
+            "enhanced_tracking": {
+                "name": "Enhanced tracking"
+            }
+        }
+    },
+    "exceptions": {
+        "not_reachable": {
+            "message": "The motorcycle did not respond: {error}"
+        },
+        "set_charge_limit_failed": {
+            "message": "Setting the charge limit failed: {error}"
+        },
+        "start_charging_failed": {
+            "message": "Starting to charge failed: {error}"
+        },
+        "set_tracking_failed": {
+            "message": "Switching the enhanced tracking failed: {error}"
+        },
+        "schedule_failed": {
+            "message": "Changing the charging schedules failed: {error}"
+        },
+        "invalid_device": {
+            "message": "The device is not a LiveWire motorcycle"
+        },
+        "bike_not_loaded": {
+            "message": "The motorcycle is not available, its LiveWire entry is not loaded"
+        },
+        "unknown_schedule": {
+            "message": "The motorcycle has no charging schedule {schedule_id}"
+        }
+    },
+    "issues": {
+        "not_paired": {
+            "title": "{bike} is not paired",
+            "description": "The device UUID of Home Assistant is not paired with {bike}, so its battery and charging status are not available.\n\nTo pair it, go to **Settings** > **Devices & services** > **LiveWire**, choose **Reconfigure** in the menu of the entry, then **Pair with my motorcycle**."
+        }
+    },
+    "selector": {
+        "day": {
+            "options": {
+                "mon": "Monday",
+                "tue": "Tuesday",
+                "wed": "Wednesday",
+                "thu": "Thursday",
+                "fri": "Friday",
+                "sat": "Saturday",
+                "sun": "Sunday"
+            }
+        }
+    },
+    "services": {
+        "add_charging_schedule": {
+            "name": "Add charging schedule",
+            "description": "Adds a window in which the motorcycle charges. The app allows up to 5 schedules.",
+            "fields": {
+                "device_id": {
+                    "name": "Motorcycle",
+                    "description": "The motorcycle to schedule charging for."
+                },
+                "days": {
+                    "name": "Days",
+                    "description": "The days of the week the schedule applies to."
+                },
+                "start": {
+                    "name": "Start",
+                    "description": "When charging starts, in the local time of Home Assistant."
+                },
+                "end": {
+                    "name": "End",
+                    "description": "When charging ends, may be before the start to cross midnight."
+                }
+            }
+        },
+        "update_charging_schedule": {
+            "name": "Update charging schedule",
+            "description": "Changes a charging schedule. No days disable it.",
+            "fields": {
+                "device_id": {
+                    "name": "Motorcycle",
+                    "description": "The motorcycle of the schedule."
+                },
+                "schedule_id": {
+                    "name": "Schedule ID",
+                    "description": "The ID of the schedule, from the attributes of the Charging schedules sensor."
+                },
+                "days": {
+                    "name": "Days",
+                    "description": "The days of the week the schedule applies to."
+                },
+                "start": {
+                    "name": "Start",
+                    "description": "When charging starts, in the local time of Home Assistant."
+                },
+                "end": {
+                    "name": "End",
+                    "description": "When charging ends, may be before the start to cross midnight."
+                }
+            }
+        },
+        "delete_charging_schedule": {
+            "name": "Delete charging schedule",
+            "description": "Deletes a charging schedule.",
+            "fields": {
+                "device_id": {
+                    "name": "Motorcycle",
+                    "description": "The motorcycle of the schedule."
+                },
+                "schedule_id": {
+                    "name": "Schedule ID",
+                    "description": "The ID of the schedule, from the attributes of the Charging schedules sensor."
+                }
+            }
+        }
+    }
+}

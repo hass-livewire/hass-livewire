@@ -1,0 +1,47 @@
+add_charging_schedule:
+  fields:
+    device_id: &device
+      required: true
+      selector:
+        device:
+          integration: livewire
+    days: &days
+      required: true
+      selector:
+        select:
+          multiple: true
+          translation_key: day
+          options:
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+            - sat
+            - sun
+    start: &start
+      required: true
+      example: "22:00"
+      selector:
+        time:
+    end: &end
+      required: true
+      example: "06:00"
+      selector:
+        time:
+
+update_charging_schedule:
+  fields:
+    device_id: *device
+    schedule_id: &schedule_id
+      required: true
+      selector:
+        text:
+    days: *days
+    start: *start
+    end: *end
+
+delete_charging_schedule:
+  fields:
+    device_id: *device
+    schedule_id: *schedule_id

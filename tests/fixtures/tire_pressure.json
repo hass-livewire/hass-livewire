@@ -1,0 +1,9 @@
+{
+    "FrontTireLow": 0,
+    "RearTireLow": 1,
+    "TirePressureFront": {"UnitOfMeasure": "psi", "value": 36},
+    "TirePressureRear": {"UnitOfMeasure": "psi", "value": 33},
+    "RecomendedTirePressureFront": {"UnitOfMeasure": "psi", "value": 36},
+    "RecomendedTirePressureRear": {"UnitOfMeasure": "psi", "value": 42},
+    "lastUpdated": 1789143800000
+}

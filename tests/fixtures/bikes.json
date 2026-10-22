@@ -1,0 +1,20 @@
+{
+    "bikes": [
+        {
+            "id": "100000001",
+            "modifiedTime": "2025-10-18 13:12:31+0000",
+            "createdTime": "2025-10-18 13:12:31+0000",
+            "vin": "7TM3GDYD6SB000000",
+            "year": 2025,
+            "make": "LiveWire",
+            "model": "S2 Mulholland",
+            "name": "Mulholland",
+            "primaryBike": true,
+            "color": "Liquid Black / Black",
+            "colorCode": "M36",
+            "modelNumber": "3GDY",
+            "modelCode": "S2MH",
+            "brandShortName": "LW"
+        }
+    ]
+}

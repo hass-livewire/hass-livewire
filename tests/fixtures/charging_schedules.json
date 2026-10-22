@@ -1,0 +1,11 @@
+{
+    "schedules": [
+        {
+            "scheduleId": "s1",
+            "status": "ACTIVE",
+            "timezoneOffsetMinutes": 120,
+            "days": ["Mon", "Tue"],
+            "time": {"start": "22:00", "end": "06:00"}
+        }
+    ]
+}
