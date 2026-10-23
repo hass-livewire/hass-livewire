@@ -1,6 +1,9 @@
 {
     "domain": "livewire",
     "name": "LiveWire",
+    "categories": [
+        "vehicles_transport.bikes_scooters"
+    ],
     "codeowners": [
         "@blind-oracle"
     ],
