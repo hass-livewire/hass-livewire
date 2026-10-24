@@ -17,8 +17,6 @@ jobs:
         uses: "hacs/action@main"
         with:
           category: "integration"
-          # No brand images yet
-          ignore: "brands"
 
       - name: HASS validation
         uses: home-assistant/actions/hassfest@master
