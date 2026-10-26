@@ -12,6 +12,7 @@ from homeassistant.const import (
     ATTR_UNIT_OF_MEASUREMENT,
     STATE_OFF,
     STATE_ON,
+    STATE_UNAVAILABLE,
     UnitOfLength,
     UnitOfPressure,
 )
@@ -91,6 +92,32 @@ async def test_binary_sensors(
     assert state(hass, "binary_sensor", "tire_pressure_front_low").state == STATE_OFF
     assert state(hass, "binary_sensor", "tire_pressure_rear_low").state == STATE_ON
     assert state(hass, "binary_sensor", "paired").state == STATE_ON
+
+
+async def test_unknown_tire_pressure(
+    hass: HomeAssistant, config_entry: MockConfigEntry, fake_client: FakeClient
+) -> None:
+    """The API reports an unknown pressure as negative"""
+
+    fake_client.tires["TirePressureFront"]["value"] = -1
+
+    assert await hass.config_entries.async_setup(config_entry.entry_id)
+    await hass.async_block_till_done()
+
+    assert state(hass, "sensor", "tire_pressure_front").state == STATE_UNAVAILABLE
+    assert (
+        state(hass, "binary_sensor", "tire_pressure_front_low").state
+        == STATE_UNAVAILABLE
+    )
+
+    rear = state(hass, "sensor", "tire_pressure_rear")
+    assert float(rear.state) == pytest.approx(
+        converted(rear, 33, UnitOfPressure.PSI, PressureConverter)
+    )
+    assert state(hass, "binary_sensor", "tire_pressure_rear_low").state == STATE_ON
+
+    await hass.config_entries.async_unload(config_entry.entry_id)
+    await hass.async_block_till_done()
 
 
 async def test_location(

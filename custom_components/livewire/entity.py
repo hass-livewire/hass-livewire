@@ -20,6 +20,7 @@ class LivewireEntityDescription(EntityDescription):
     """Description of an entity created for the bikes that provide its data"""
 
     exists_fn: Callable[[BikeData], bool] = lambda _: True
+    available_fn: Callable[[BikeData], bool] = lambda _: True
 
 
 def unique_id(vin: str, key: str) -> str:
@@ -65,12 +66,13 @@ class LivewireEntity(CoordinatorEntity[LivewireCoordinator]):
     """An entity of a bike"""
 
     _attr_has_entity_name = True
+    entity_description: LivewireEntityDescription
 
     def __init__(
         self,
         coordinator: LivewireCoordinator,
         item: BikeData,
-        description: EntityDescription,
+        description: LivewireEntityDescription,
     ) -> None:
         super().__init__(coordinator)
         self.entity_description = description
@@ -103,4 +105,8 @@ class LivewireEntity(CoordinatorEntity[LivewireCoordinator]):
 
     @property
     def available(self) -> bool:
-        return super().available and self._vin in self.coordinator.data
+        return (
+            super().available
+            and self._vin in self.coordinator.data
+            and self.entity_description.available_fn(self.bike_data)
+        )

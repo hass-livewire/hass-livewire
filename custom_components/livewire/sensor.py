@@ -23,7 +23,7 @@ from homeassistant.const import (
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
-from .coordinator import BikeData, LivewireConfigEntry
+from .coordinator import BikeData, LivewireConfigEntry, tire_pressure_known
 from .entity import LivewireEntity, LivewireEntityDescription, entities_to_add
 
 # Units of tire pressures as the API names them, compared in lower case
@@ -162,6 +162,7 @@ SENSORS: tuple[LivewireSensorEntityDescription, ...] = (
         value_fn=lambda d: d.tires.front if d.tires else None,
         attributes_fn=_tire_pressure_attributes(front=True),
         exists_fn=lambda d: d.tires is not None,
+        available_fn=lambda d: tire_pressure_known(d, front=True),
     ),
     LivewireSensorEntityDescription(
         key="tire_pressure_rear",
@@ -171,6 +172,7 @@ SENSORS: tuple[LivewireSensorEntityDescription, ...] = (
         value_fn=lambda d: d.tires.rear if d.tires else None,
         attributes_fn=_tire_pressure_attributes(front=False),
         exists_fn=lambda d: d.tires is not None,
+        available_fn=lambda d: tire_pressure_known(d, front=False),
     ),
     LivewireSensorEntityDescription(
         key="charging_schedules",

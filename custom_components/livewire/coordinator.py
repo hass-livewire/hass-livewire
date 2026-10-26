@@ -86,6 +86,15 @@ def any_charging(items: Iterable[BikeData]) -> bool:
     return any(item.charging is not None and item.charging.charging for item in items)
 
 
+def tire_pressure_known(item: BikeData, *, front: bool) -> bool:
+    """Whether the pressure of a tire is known: the API reports an unknown one as
+    negative"""
+    if item.tires is None:
+        return False
+    pressure = item.tires.front if front else item.tires.rear
+    return pressure is not None and pressure >= 0
+
+
 class LivewireCoordinator(DataUpdateCoordinator[dict[str, BikeData]]):
     """Fetches the data of all bikes of an account"""
 

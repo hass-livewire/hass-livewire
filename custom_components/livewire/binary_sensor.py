@@ -14,7 +14,7 @@ from homeassistant.const import EntityCategory, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
-from .coordinator import BikeData, LivewireConfigEntry
+from .coordinator import BikeData, LivewireConfigEntry, tire_pressure_known
 from .entity import LivewireEntity, LivewireEntityDescription, entities_to_add
 
 
@@ -46,6 +46,7 @@ BINARY_SENSORS: tuple[LivewireBinarySensorEntityDescription, ...] = (
         device_class=BinarySensorDeviceClass.PROBLEM,
         is_on_fn=lambda d: d.tires.front_low if d.tires else None,
         exists_fn=lambda d: d.tires is not None,
+        available_fn=lambda d: tire_pressure_known(d, front=True),
     ),
     LivewireBinarySensorEntityDescription(
         key="tire_pressure_rear_low",
@@ -53,6 +54,7 @@ BINARY_SENSORS: tuple[LivewireBinarySensorEntityDescription, ...] = (
         device_class=BinarySensorDeviceClass.PROBLEM,
         is_on_fn=lambda d: d.tires.rear_low if d.tires else None,
         exists_fn=lambda d: d.tires is not None,
+        available_fn=lambda d: tire_pressure_known(d, front=False),
     ),
     LivewireBinarySensorEntityDescription(
         key="paired",
